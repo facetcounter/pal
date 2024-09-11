@@ -1,23 +1,22 @@
-import logo from './logo.svg';
+
 import './App.css';
+import React, { useState } from 'react';
+import Sentance from './components/Sentance';
+import Wordlist from './components/Wordlist';
+
 
 function App() {
+
+  const [sentance, setSentance] = useState("");
+  let wordadd = function (word) {
+    setSentance(sentance + " " + word.word);
+
+  }
+  let resetSentance = function () { setSentance("") };
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Sentance sentance={sentance} resetSentance={resetSentance} /><br />
+      <Wordlist wordadd={wordadd} />
     </div>
   );
 }
