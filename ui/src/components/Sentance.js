@@ -13,16 +13,27 @@ const SentanceBox = styled.div`
 `
 
 function Sentance({ sentance, resetSentance }) {
+    const [anag, setAnag] = useState("");
     let sendSentance = async function (sentance) {
         console.log(sentance);
         resetSentance();
-        return;
-        const url = "https://localhost:3001/anagram";
-        const response = await fetch(url);
+        const url = "http://localhost:3001/anagram";
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(sentance)
+        });
         const json = await response.json();
+        setAnag(json.sentance);
         console.log(json);
     };
 
-    return <SentanceBox className='Sentance' onClick={() => { sendSentance({ sentance }) }}>{sentance}</SentanceBox>;
+    return <div>
+        <SentanceBox className='Sentance' onClick={() => { sendSentance({ sentance }) }}>{sentance}</SentanceBox><br />
+        <SentanceBox>{anag}</SentanceBox>
+    </div>;
 }
 export default Sentance;
