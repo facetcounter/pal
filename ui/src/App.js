@@ -15,7 +15,9 @@ function App() {
   let resetSentance = function () { setSentance("") };
   return (
     <div className="App">
+      <h1>build a sentance</h1>
       <Sentance sentance={sentance} resetSentance={resetSentance} /><br />
+      <h3>click on words</h3>
       <Wordlist wordadd={wordadd} />
     </div>
   );

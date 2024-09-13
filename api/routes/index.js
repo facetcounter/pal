@@ -1,28 +1,21 @@
 var express = require('express');
 var router = express.Router();
-const anagrams = require('english-anagrams');
+const getAnagrams = require('./getAnagrams.js');
 
 
-/* GET home page. */
-router.get('/anagram', function (req, res, next) {
-  console.log(req);
-  res.json({ status: "ok" })
-});
-router.post('/anagram', function (req, res, next) {
-  console.log(req.body);
-  let words = [];
-  req.body.sentance.split(" ").forEach((item, i) => {
-    let ags = anagrams(item);
-    console.log(ags);
-    if (Array.isArray(ags)) {
-      ags.unshift();
-      let chosen = Math.floor(Math.random() * ags.length);
-      words.push(ags[chosen]);
-    } else {
-      words.push(item)
-    }
-  });
-  res.json({ sentance: words.join(" ") })
+
+
+router.all('/anagram', function (req, res, next) {
+  res.type('json');
+  if (req.body.sentance !== undefined) {
+    res.json({ sentance: getAnagrams(req.body.sentance) });
+    return;
+  } else if (req.query.sentance !== undefined) {
+    res.json({ sentance: getAnagrams(req.query.sentance) });
+    return;
+  } else {
+    res.json({ sentance: "" });
+  }
 });
 
 module.exports = router;
